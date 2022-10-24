@@ -7,6 +7,8 @@ import sun.security.krb5.internal.crypto.Aes128;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ThreadPoolExecutor;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 /**
  * @author zhp
  * @date 2022-10-24 21:04
@@ -18,6 +20,9 @@ public class testThreadPoolFactoryUtil {
     public void test1(){
         ExecutorService es1 = ThreadPoolFactoryUtil.createCustomThreadPoolIfAbsent("测试1");
         ExecutorService es2 = ThreadPoolFactoryUtil.createCustomThreadPoolIfAbsent("测试2");
+        ExecutorService es3 = ThreadPoolFactoryUtil.createCustomThreadPoolIfAbsent("测试1");
+        assertEquals(es1,es3);
+
         for(int i=0;i<10;i++){
             es1.execute(()->{
                 System.out.println("线程1：输出"+anInt);
