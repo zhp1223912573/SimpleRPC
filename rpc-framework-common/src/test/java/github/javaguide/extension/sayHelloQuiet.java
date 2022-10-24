@@ -7,6 +7,6 @@ package github.javaguide.extension;
 public class sayHelloQuiet implements sayHello {
     @Override
     public void sayHello(String name) {
-        System.out.println("你好："+name+"(quietly)");
+        System.out.println("你好,"+name+"(quietly)");
     }
 }
