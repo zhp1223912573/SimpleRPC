@@ -17,11 +17,13 @@
         <!--编码类型-->
         <encoding>UTF-8</encoding>
         <guava.version>30.1.1-jre</guava.version>
+        <kryo.version>4.0.2</kryo.version>
         <!--logging-->
         <slf4j.version>1.7.25</slf4j.version>
         <!-- test -->
         <junit.jupiter.version>5.5.2</junit.jupiter.version>
         <junit.platform.version>1.5.2</junit.platform.version>
+
     </properties>
 
     <dependencies>
