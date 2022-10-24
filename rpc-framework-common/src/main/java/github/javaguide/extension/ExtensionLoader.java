@@ -35,7 +35,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 @Slf4j
 public final class ExtensionLoader<T> {
     //具体实现类相关配置信息路径（系统自带ServiceLoder加载路径："META-INF/services"
-    private static final String SERVICE_DIRECTORY = "META-INF/extensions";
+    private static final String SERVICE_DIRECTORY = "META-INF/extensions/";
     //缓存某一spi接口的扩展加载器，避免重复加载
     private static final Map<Class<?>,ExtensionLoader<?>> EXTENSION_LOADERS = new ConcurrentHashMap<>();
     //缓存某一spi接口的具体实现类实例对象，同样也是避免重复
@@ -65,10 +65,10 @@ public final class ExtensionLoader<T> {
         if(type==null){
             throw new IllegalArgumentException("扩展类型不应该为空！");
         }
-        if(type.isInterface()){
+        if(!type.isInterface()){
             throw new IllegalArgumentException("扩展类型必须为interface类型！");
         }
-        if(type.isAnnotationPresent(SPI.class)){
+        if(!type.isAnnotationPresent(SPI.class)){
             throw new IllegalArgumentException("扩展类型必须被@SPI接口标记！");
         }
         //开始获取ExtensionLoader

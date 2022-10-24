@@ -1,4 +1,4 @@
-package github.javaguide;
+package github.javaguide.factory;
 
 import github.javaguide.factory.SingletonFactory;
 import org.junit.jupiter.api.Test;
@@ -12,6 +12,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @date 2022-10-24 19:41
  */
 public class SingletonFactoryTest {
+    /**
+     * 测试通过
+     */
     @Test
     public void testGetSingleton(){
         ArrayList instance = SingletonFactory.getInstance(ArrayList.class);

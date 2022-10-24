@@ -1,0 +1,3 @@
+loud=github.javaguide.extension.sayHelloLoud #这是一段注释
+#注释改行 quiet=github.javaguide.extension.sayHelloLoud
+quiet=github.javaguide.extension.sayHelloQuiet
