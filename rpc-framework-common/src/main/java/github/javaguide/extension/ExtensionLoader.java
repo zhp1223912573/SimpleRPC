@@ -183,7 +183,7 @@ public final class ExtensionLoader<T> {
     }
 
     /**
-     * 读取并解析特定配置文件内容，获取对应名称（简称）并加载其对应的类型，同时进行保存。
+     * 读取并解析特定配置文件内容，获取对应名称（简称）并加载其对应的类型，同时进行保存
      * @param classes
      * @param classLoader
      * @param url
