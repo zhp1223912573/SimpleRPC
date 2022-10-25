@@ -95,6 +95,8 @@ public class CuratorUtils {
                 log.info("节点成功创建！节点为[{}]", path);
             }
             //不存在，新建一个节点
+            REGISTRED_PATH_SET.add(path);
+
         }catch (Exception e){
             log.error("创建持久性节点 [{}] 失败", path);
         }
@@ -138,6 +140,7 @@ public class CuratorUtils {
         PathChildrenCache pathChildrenCache = new PathChildrenCache(zkClient, servicePath, true);
         //子节点发生变化，重新读入缓存
         PathChildrenCacheListener pathChildrenCacheListener =  (curatorFramework, pathChildrenCacheEvent) -> {
+            //监听到节点发生变化，重新读入该节点的所有子节点信息
             List<String> serviceAddresses = curatorFramework.getChildren().forPath(servicePath);
             SERVICE_MAP_ADDRESS_CACHED.put(rpcServiceName, serviceAddresses);
         };
@@ -160,6 +163,7 @@ public class CuratorUtils {
                 log.error("清除节点路径 [{}] 失败", p);
             }
         });
+        log.info("[]",REGISTRED_PATH_SET.toString());
         log.info("zookeeper所有服务节点清除:[{}]", REGISTRED_PATH_SET.toString());
 
     }
