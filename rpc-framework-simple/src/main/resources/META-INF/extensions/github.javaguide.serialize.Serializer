@@ -1,0 +1,2 @@
+kryo=github.javaguide.serialize.kryo.KryoSerializer
+hessian=github.javaguide.serialize.hessian.HessianSerializer
