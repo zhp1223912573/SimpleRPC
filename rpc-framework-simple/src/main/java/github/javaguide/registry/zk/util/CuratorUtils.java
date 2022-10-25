@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 public class CuratorUtils {
     private static final int BASE_SLEEP_TIME = 1000;//尝试获取客户端连接，每次访问的中间休息时间
     private static final int MAX_RETRYS = 3;//最大尝试次数
-    private static final String ZK_REFISTRY_ROOT_PATH = "/my-rpc";//服务节点的根路径
+    public static final String ZK_REFISTRY_ROOT_PATH = "/my-rpc";//服务节点的根路径
     //服务--地址映射缓存，一个服务可能存在多个远程地址
     private static final Map<String, List<String>> SERVICE_MAP_ADDRESS_CACHED = new ConcurrentHashMap<>();
     //已经注册的服务节点路径，避免重复添加
