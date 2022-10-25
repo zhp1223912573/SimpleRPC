@@ -18,6 +18,8 @@
         <encoding>UTF-8</encoding>
         <guava.version>30.1.1-jre</guava.version>
         <kryo.version>4.0.2</kryo.version>
+        <!--hessian-->
+        <hessian.version>4.0.65</hessian.version>
         <!--logging-->
         <slf4j.version>1.7.25</slf4j.version>
         <!-- test -->
