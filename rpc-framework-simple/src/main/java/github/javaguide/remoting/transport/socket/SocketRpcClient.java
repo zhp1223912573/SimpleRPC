@@ -1,7 +1,9 @@
 package github.javaguide.remoting.transport.socket;
 
 import github.javaguide.exception.RpcException;
+import github.javaguide.extension.ExtensionLoader;
 import github.javaguide.factory.SingletonFactory;
+import github.javaguide.provider.ZkServiceProviderImpl;
 import github.javaguide.registry.ServiceDiscovery;
 import github.javaguide.remoting.dto.RpcRequest;
 import github.javaguide.remoting.transport.RpcRequestTransport;
@@ -12,20 +14,22 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
+import java.net.ServerSocket;
 import java.net.Socket;
+import java.security.cert.Extension;
 
 /**
  * @author zhp
  * @date 2022-10-26 13:22
  * 基于socket的rpcrequest传输
  */
-public class SockerRpcClient implements RpcRequestTransport {
+public class SocketRpcClient implements RpcRequestTransport {
 
     //服务发现
     private final ServiceDiscovery serviceDiscovery;
 
-    public SockerRpcClient() {
-        this.serviceDiscovery = SingletonFactory.getInstance(ServiceDiscovery.class);
+    public SocketRpcClient() {
+        this.serviceDiscovery = ExtensionLoader.getExtensionLoader(ServiceDiscovery.class).getExtension("zk");
     }
 
     /**

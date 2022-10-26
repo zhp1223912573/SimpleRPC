@@ -11,8 +11,9 @@ public class HelloService implements service {
     }
 
     @Override
-    public void doSomething(String msg) {
+    public String doSomething(String msg) {
         sayHello();
         System.out.println(""+msg);
+        return "好的，你是涡蝶";
     }
 }

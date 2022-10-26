@@ -4,6 +4,7 @@ import github.javaguide.config.CustomShutdownHook;
 import github.javaguide.config.RpcServiceConfig;
 import github.javaguide.factory.SingletonFactory;
 import github.javaguide.provider.ServiceProvider;
+import github.javaguide.provider.ZkServiceProviderImpl;
 import github.javaguide.registry.ServiceRegistry;
 import github.javaguide.utils.concurrent.threadpool.ThreadPoolFactoryUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +30,7 @@ public class SocketRpcServer {
 
     public SocketRpcServer() {
         this.threadpool = ThreadPoolFactoryUtil.createCustomThreadPoolIfAbsent("socket-server-rpc-pool");
-        this.serviceProvider = SingletonFactory.getInstance(ServiceProvider.class);
+        this.serviceProvider = SingletonFactory.getInstance(ZkServiceProviderImpl.class);
     }
 
     public void registerService(RpcServiceConfig rpcServiceConfig) {
@@ -37,7 +38,6 @@ public class SocketRpcServer {
     }
 
     public void start(){
-
         try(ServerSocket server = new ServerSocket()){
             //监听本地端口
             String hostAddress = InetAddress.getLocalHost().getHostAddress();
@@ -56,6 +56,5 @@ public class SocketRpcServer {
         }catch(IOException e){
             log.error("尝试IOException",e);
         }
-        //
     }
 }

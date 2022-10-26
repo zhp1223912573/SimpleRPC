@@ -33,7 +33,7 @@ public class SocketRpcRequestHandlerRunnable implements Runnable{
      */
     @Override
     public void run() {
-        log.info("服务端出来客户端发送请求： [{}]", Thread.currentThread().getName());
+        log.info("服务端处理客户端发送请求： [{}]", Thread.currentThread().getName());
         try(ObjectInputStream objectInputStream= new ObjectInputStream(socket.getInputStream());
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream())){
             //获取服务请求
