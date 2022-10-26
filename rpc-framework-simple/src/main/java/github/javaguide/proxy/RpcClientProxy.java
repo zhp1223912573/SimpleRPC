@@ -81,6 +81,7 @@ public class RpcClientProxy implements InvocationHandler {
                 .methodName(method.getName())
                 .group(rpcServiceConfig.getGroup())
                 .version(rpcServiceConfig.getVersion())
+                .paramTypes(method.getParameterTypes())
                 .build();
         RpcResponse<Object> rpcResponse = null;
         //基于Netty传输

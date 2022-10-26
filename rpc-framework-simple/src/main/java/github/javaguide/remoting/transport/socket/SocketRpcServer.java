@@ -8,6 +8,7 @@ import github.javaguide.provider.ZkServiceProviderImpl;
 import github.javaguide.registry.ServiceRegistry;
 import github.javaguide.utils.concurrent.threadpool.ThreadPoolFactoryUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -22,6 +23,7 @@ import java.util.concurrent.ExecutorService;
  * 基于socket的rpcrequst处理客户端
  */
 @Slf4j
+@Component
 public class SocketRpcServer {
     //处理客户端链接
     private final ExecutorService threadpool;

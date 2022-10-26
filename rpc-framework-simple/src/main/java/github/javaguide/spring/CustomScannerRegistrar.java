@@ -1,5 +1,6 @@
 package github.javaguide.spring;
 
+import github.javaguide.annotation.RpcScan;
 import github.javaguide.annotation.RpcService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -39,11 +40,11 @@ public class CustomScannerRegistrar implements ImportBeanDefinitionRegistrar, Re
     @Override
     public void registerBeanDefinitions(AnnotationMetadata annotationMetadata, BeanDefinitionRegistry beanDefinitionRegistry) {
         //获取注解元数据中@RpcScan中的注解相关属性值 得到要扫描的与RPC服务相关的具体实现类的包路径
-        AnnotationAttributes rpcScanAnnotationAttributes = AnnotationAttributes.fromMap(annotationMetadata.getAnnotationAttributes(RpcService.class.getName()));
+        AnnotationAttributes rpcScanAnnotationAttributes = AnnotationAttributes.fromMap(annotationMetadata.getAnnotationAttributes(RpcScan.class.getName()));
         //
         String[] rpcScanBasePackages = new String[0];
         //获取@RpcScan扫描的包路径
-        if (rpcScanBasePackages != null) {
+        if (rpcScanAnnotationAttributes != null) {
             rpcScanBasePackages = rpcScanAnnotationAttributes.getStringArray(BASE_PACKAGE_ATTRIBUTE_NAME);
         }
         //不存在包路径，则扫描注解扫在的包

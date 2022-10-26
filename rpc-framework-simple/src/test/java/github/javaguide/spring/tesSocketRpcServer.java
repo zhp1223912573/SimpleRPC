@@ -1,20 +1,15 @@
-package github.javaguide.transport.socket;
+package github.javaguide.spring;
 
 import github.javaguide.annotation.RpcScan;
 import github.javaguide.config.RpcServiceConfig;
 import github.javaguide.provider.HelloService;
-import github.javaguide.remoting.dto.RpcRequest;
-import github.javaguide.remoting.transport.socket.SocketRpcClient;
 import github.javaguide.remoting.transport.socket.SocketRpcServer;
-import org.junit.jupiter.api.Test;
-
-import java.net.Socket;
-import java.util.UUID;
 
 /**
  * @author zhp
  * @date 2022-10-26 14:13
  */
+@RpcScan(basePackage ={"github.javaguide"})
 public class tesSocketRpcServer {
 
     public static void main(String[] args) {

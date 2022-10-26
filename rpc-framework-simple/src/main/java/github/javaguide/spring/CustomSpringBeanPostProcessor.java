@@ -14,6 +14,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 
@@ -27,6 +28,7 @@ import java.lang.reflect.Field;
  * 实例化后：读取@RpcReference的相关配置信息，并通过RpcClientProxy创建该服务的代理实现类，将代理对象注入类中被该注解标记的成员变量。
  */
 @Slf4j
+@Component
 public class CustomSpringBeanPostProcessor implements BeanPostProcessor {
 
     //rpc请求发送客户端 （netty实现和socket实现）
@@ -35,7 +37,7 @@ public class CustomSpringBeanPostProcessor implements BeanPostProcessor {
     private final ServiceProvider serviceProvider;
 
     public CustomSpringBeanPostProcessor() {
-        rpcClient = ExtensionLoader.getExtensionLoader(RpcRequestTransport.class).getExtension("netty");
+        rpcClient = ExtensionLoader.getExtensionLoader(RpcRequestTransport.class).getExtension("socket");
         serviceProvider = SingletonFactory.getInstance(ZkServiceProviderImpl.class);
     }
 
@@ -61,8 +63,9 @@ public class CustomSpringBeanPostProcessor implements BeanPostProcessor {
     @SneakyThrows
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+        Class<?> targetClass = bean.getClass();
         //获取bean实例内部成员变量
-        Field[] declaredFields = bean.getClass().getDeclaredFields();
+        Field[] declaredFields = targetClass.getDeclaredFields();
         //遍历所有成员变量
         for(Field declaredField : declaredFields){
             //得到被@RpcReference标记的成员
@@ -79,6 +82,7 @@ public class CustomSpringBeanPostProcessor implements BeanPostProcessor {
                 //注入到bean内部成员变量
                 try {
                     declaredField.set(bean, proxy);
+                    log.info("实例 [{}] 内部注入成员变量 [{}]",bean.getClass().getName(),proxy.getClass().getName());
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
