@@ -27,6 +27,9 @@ public class UnprocessedRequest {
         UNPROCESSED_RESPONSE_FUTURES.put(requestId,future);
     }
 
+    public UnprocessedRequest() {
+    }
+
     /**
      * 客户端监听到来自服务端的消息，从未处理队列中取出该requestId对应消息保存对象futrue，
      * 将返回消息装入future

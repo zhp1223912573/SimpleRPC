@@ -1,8 +1,13 @@
 package github.javaguide.remoting.transport.netty.client;
 
+import github.javaguide.compress.Compress;
+import github.javaguide.enums.CompressTypeEnum;
+import github.javaguide.enums.SerializationTypeEnum;
 import github.javaguide.extension.ExtensionLoader;
 import github.javaguide.factory.SingletonFactory;
 import github.javaguide.registry.ServiceDiscovery;
+import github.javaguide.remoting.constants.RpcConstants;
+import github.javaguide.remoting.dto.RpcMessage;
 import github.javaguide.remoting.dto.RpcRequest;
 import github.javaguide.remoting.dto.RpcResponse;
 import github.javaguide.remoting.transport.RpcRequestTransport;
@@ -84,13 +89,28 @@ public class NettyRpcClient implements RpcRequestTransport {
             //再次当前集合取出该future对象，保存response返回对象
             unprocessedRequest.put(rpcRequest.getRequestId(),resultFuture);
             //封装RpcMessage
-
-
-            //写入信息，调用监听器，监听响应
+            RpcMessage rpcMessage = new RpcMessage().builder()
+                    .messageType(RpcConstants.REQUEST_TYPE)
+                    .codec(SerializationTypeEnum.KYRO.getCode())
+                    .compress(CompressTypeEnum.GZIP.getCode())
+                    .data(rpcRequest)
+                    .build();
+            //写入信息，调用监听器，监听消息是否正常到达
+            channel.writeAndFlush(rpcMessage).addListener((ChannelFutureListener) future->{
+                if(future.isSuccess()){
+                    log.info("客户端rpcMessage [{}] 成功发送到达服务端", rpcMessage);
+                }else{
+                    future.channel().close();
+                    resultFuture.completeExceptionally(future.cause());
+                    log.error("消息发送失败！", future.cause());
+                }
+            });
+        }else{
+            throw new IllegalStateException();
         }
 
         //返回保存结果
-        return null;
+        return resultFuture;
     }
 
     /**

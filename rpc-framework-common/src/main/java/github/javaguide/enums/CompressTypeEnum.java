@@ -11,7 +11,7 @@ import lombok.Getter;
  */
 @AllArgsConstructor
 @Getter
-public enum CommpressTypeEnum {
+public enum CompressTypeEnum {
 
     GZIP((byte)0x01,"gzip");
 
@@ -19,7 +19,7 @@ public enum CommpressTypeEnum {
     private final String name;
 
     public static String getName(byte code){
-        for(CommpressTypeEnum c:CommpressTypeEnum.values()){
+        for(CompressTypeEnum c: CompressTypeEnum.values()){
             if(c.code==code){
                 return c.name;
             }
