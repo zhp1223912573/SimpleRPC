@@ -76,7 +76,7 @@ public class ZkServiceProviderImpl implements ServiceProvider{
             this.addService(rpcServiceConfig);
             //向注册中心进行服务注册
             serviceRegistry.registryService
-                    (rpcServiceConfig.getRpcServiceName(),new InetSocketAddress(hostAddress,9998));
+                    (rpcServiceConfig.getRpcServiceName(),new InetSocketAddress(hostAddress,9997));
         }catch(UnknownHostException e){
             log.error("获取本机地址时出现未知异常:",e.getMessage());
         }

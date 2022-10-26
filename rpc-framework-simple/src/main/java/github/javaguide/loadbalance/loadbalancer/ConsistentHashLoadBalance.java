@@ -1,9 +1,8 @@
 package github.javaguide.loadbalance.loadbalancer;
 
 import github.javaguide.loadbalance.AbstracLoadBalance;
-import github.javaguide.remoting.dto.RpcReuqest;
+import github.javaguide.remoting.dto.RpcRequest;
 
-import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -33,15 +32,15 @@ public class ConsistentHashLoadBalance extends AbstracLoadBalance {
     /**
      *
      * @param serviceUrlList 服务地址集合
-     * @param rpcReuqest 服务请求
+     * @param rpcRequest 服务请求
      * @return
      */
     @Override
-    protected String doSelect(List<String> serviceUrlList, RpcReuqest rpcReuqest) {
+    protected String doSelect(List<String> serviceUrlList, RpcRequest rpcRequest) {
         //生成服务地址集合的身份id 用来标识唯一一个选择且
         int identityHashCode = System.identityHashCode(serviceUrlList);
         //获取服务名称
-        String serviceName = rpcReuqest.getServiceName();
+        String serviceName = rpcRequest.getServiceName();
         ConsistentHashSelector selector = selectors.get(serviceName);
         //如果不存在，或者身份id不一致，再次创建一个，避免同一服务在多次调用期间生成新的服务地址节点
         if(selector==null|| identityHashCode!=selector.identityHashCode){
@@ -50,7 +49,7 @@ public class ConsistentHashLoadBalance extends AbstracLoadBalance {
             selector = selectors.get(serviceName);
         }
         //开始选择
-        return selector.select(serviceName+ Arrays.stream(rpcReuqest.getParameters()));
+        return selector.select(serviceName+ Arrays.stream(rpcRequest.getParameters()));
 
     }
 

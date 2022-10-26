@@ -6,7 +6,7 @@ import github.javaguide.extension.ExtensionLoader;
 import github.javaguide.loadbalance.LoadBalance;
 import github.javaguide.registry.ServiceDiscovery;
 import github.javaguide.registry.zk.util.CuratorUtils;
-import github.javaguide.remoting.dto.RpcReuqest;
+import github.javaguide.remoting.dto.RpcRequest;
 import github.javaguide.utils.CollectionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.framework.CuratorFramework;
@@ -28,9 +28,9 @@ public class zkServiceDiscoveryImpl implements ServiceDiscovery {
     }
 
     @Override
-    public InetSocketAddress lookupService(RpcReuqest rpcReuqest) {
+    public InetSocketAddress lookupService(RpcRequest rpcRequest) {
         //获取请求的服务名，得到该服务的所有服务地址集合
-        String serviceName = rpcReuqest.getServiceName();
+        String serviceName = rpcRequest.getServiceName();
         CuratorFramework zkClient = CuratorUtils.getZkClient();
         List<String> serviceUrlList = CuratorUtils.getChilderenNodes(zkClient, serviceName);
 
@@ -41,7 +41,7 @@ public class zkServiceDiscoveryImpl implements ServiceDiscovery {
         }
 
         //从服务地址结合中找到最合适的服务（通过负载均衡算法决定）
-        String targetServiceUrl = loadBalance.selectServiceAddress(serviceUrlList, rpcReuqest);
+        String targetServiceUrl = loadBalance.selectServiceAddress(serviceUrlList, rpcRequest);
         log.info("成功找到服务地址[{}]", targetServiceUrl);
 
         //分割得到ip地址和端口号

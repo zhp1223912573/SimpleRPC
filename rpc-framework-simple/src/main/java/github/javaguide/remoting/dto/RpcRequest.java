@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Getter
 @ToString
 @Builder
-public class RpcReuqest implements Serializable {
+public class RpcRequest implements Serializable {
     private static final long serialVersionUID = 1905122041950251207L;
     private String requestId;//请求id
     private String interfaceName;//请求接口名

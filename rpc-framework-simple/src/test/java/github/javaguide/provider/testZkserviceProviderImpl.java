@@ -12,7 +12,7 @@ public class testZkserviceProviderImpl {
     public void test(){
         HelloService helloService = new HelloService();
         RpcServiceConfig rpcServiceConfig = new RpcServiceConfig();
-        rpcServiceConfig.setVersion("1.0");
+        rpcServiceConfig.setVersion("4.0");
         rpcServiceConfig.setGroup("test");
         rpcServiceConfig.setService(helloService);
         ZkServiceProviderImpl zkServiceProvider  = new ZkServiceProviderImpl();
