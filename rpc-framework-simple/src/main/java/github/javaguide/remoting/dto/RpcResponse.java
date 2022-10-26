@@ -18,7 +18,7 @@ import java.io.Serializable;
 public class RpcResponse<T> implements Serializable {
     private static final long serialVersionUID =715745410605631233L;
     private String requestId;//响应id
-    private int code ;//响应状态码
+    private Integer code ;//响应状态码
     private String message;//响应信息
     private T data;//响应数据
 
