@@ -68,7 +68,7 @@ public class NettyRpcClient implements RpcRequestTransport {
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
                         ChannelPipeline pipeline = socketChannel.pipeline();
                         //如果超过5秒没有写入数据，发送心跳
-                        pipeline.addLast(new IdleStateHandler(0,5,0, TimeUnit.SECONDS))；
+                        pipeline.addLast(new IdleStateHandler(0,5,0, TimeUnit.SECONDS));
                         pipeline.addLast(new RpcMessageEncoder());
                         pipeline.addLast(new RpcMessageDecoder());
                         pipeline.addLast(new NettyRpcClientHandler());

@@ -37,7 +37,7 @@ public class CustomSpringBeanPostProcessor implements BeanPostProcessor {
     private final ServiceProvider serviceProvider;
 
     public CustomSpringBeanPostProcessor() {
-        rpcClient = ExtensionLoader.getExtensionLoader(RpcRequestTransport.class).getExtension("socket");
+        rpcClient = ExtensionLoader.getExtensionLoader(RpcRequestTransport.class).getExtension("netty");
         serviceProvider = SingletonFactory.getInstance(ZkServiceProviderImpl.class);
     }
 
