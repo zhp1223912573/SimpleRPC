@@ -21,7 +21,7 @@ SPI机制：
   1.相关概念入门：https://javaguide.cn/java/basis/spi.html#%E6%95%88%E6%9E%9C%E5%B1%95%E7%A4%BA  
   2.SPI机制实战：https://juejin.cn/post/6844903605695152142
  
- 负载均衡算法：
+ 负载均衡算法:
  
     1.一致性hash算法：https://blog.csdn.net/JavaMoo/article/details/79646095?ops_request_misc=&request_id=&biz_id=102&utm_term=%E4%B8%80%E8%87%B4%E6%80%A7%E5%93%88%E5%B8%8C%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-6-79646095.142^v59^js_top,201^v3^control_2&spm=1018.2226.3001.4187
     2.项目实现参考（dubbo）：https://www.cnblogs.com/konghuanxi/p/16591298.html
