@@ -20,8 +20,8 @@ public class HelloController {
         assert "Hello description is 222".equals(hello);
         System.out.println(hello);
         Thread.sleep(12000);
-//        for (int i = 0; i < 10; i++) {
-//            System.out.println(helloService.hello(new Hello("111", "222")));
-//        }
+        for (int i = 0; i < 10; i++) {
+            System.out.println(helloService.hello(new Hello("111", "222")));
+        }
     }
 }

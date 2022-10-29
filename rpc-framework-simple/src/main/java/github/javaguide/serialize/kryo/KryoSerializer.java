@@ -4,18 +4,16 @@ package github.javaguide.serialize.kryo;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
-import github.javaguide.enums.RpcResponseCodeEnum;
 import github.javaguide.exception.SerializeException;
 import github.javaguide.serialize.Serializer;
 
-import javax.sql.rowset.serial.SerialException;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 /**
  * @author zhp
  * @date 2022-10-24 21:49
- * Kyro序列化效率高，但只适用于java
+ * Kryo序列化效率高，但只适用于java
  */
 public class KryoSerializer implements Serializer {
 

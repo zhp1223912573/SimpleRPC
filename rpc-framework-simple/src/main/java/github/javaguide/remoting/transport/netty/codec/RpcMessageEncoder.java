@@ -74,18 +74,18 @@ public class RpcMessageEncoder extends MessageToByteEncoder<RpcMessage> {
                     &&msg.getMessageType()!=RpcConstants.HEARTBEAT_RESPONSE_TYPE){
                 //序列化器类型
                 String serializerName = SerializationTypeEnum.getName(msg.getCodec());
-                log.info("序列化类型为 [{}]",serializerName);
+                //log.info("序列化类型为 [{}]",serializerName);
                 Serializer serializer = ExtensionLoader.getExtensionLoader(Serializer.class).getExtension(serializerName);
                 //对msg中的data进行序列化
                 bodydata = serializer.serialize(msg.getData());
                 //压缩类型
                 String compressName = CompressTypeEnum.getName(msg.getCodec());
-                log.info("压缩类型为 [{}]",compressName);
+                //log.info("压缩类型为 [{}]",compressName);
                 Compress compress = ExtensionLoader.getExtensionLoader(Compress.class).getExtension(compressName);
                 //压缩数据
                 bodydata = compress.compress(bodydata);
                 //获取完成数据帧长度
-                fullLength = fullLength+bodydata.length;
+                fullLength = fullLength + bodydata.length;
             }
             //写入buf
             if(bodydata!=null){

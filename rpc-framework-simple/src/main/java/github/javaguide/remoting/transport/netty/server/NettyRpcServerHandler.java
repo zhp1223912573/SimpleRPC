@@ -35,13 +35,15 @@ public class NettyRpcServerHandler extends ChannelInboundHandlerAdapter {
         try{
             //判断是否为RpcMessage
             if(msg instanceof RpcMessage){
+                log.info("服务端接受数据 [{}]",msg);
                 //获取消息类型，设置RpcResponse
                 byte messageType = ((RpcMessage) msg).getMessageType();
                 RpcMessage rpcMessage = new RpcMessage();
-                rpcMessage.setCodec(SerializationTypeEnum.KYRO.getCode());
+                rpcMessage.setCodec(SerializationTypeEnum.KRYO.getCode());
                 rpcMessage.setCompress(CompressTypeEnum.GZIP.getCode());
                 //判断是否为心跳信息
                 if(messageType == RpcConstants.HEARTBEAT_REQUEST_TYPE){
+                    //log.info("接受客户端HeartBeat请求");
                     String data =(String) ((RpcMessage) msg).getData();
                     log.info("hearBeat [{}]",data);
                     //返回心跳响应
@@ -50,6 +52,7 @@ public class NettyRpcServerHandler extends ChannelInboundHandlerAdapter {
                 }
                 //判断是否为RpcRequest
                 else if(messageType ==RpcConstants.REQUEST_TYPE){
+                    //log.info("接受客户端RpcRequest请求");
                     //获取rpcReuqest,调用服务并封装返回结果
                     RpcRequest rpcRequest  = (RpcRequest) (((RpcMessage)msg).getData());
                     //调用服务
@@ -60,10 +63,11 @@ public class NettyRpcServerHandler extends ChannelInboundHandlerAdapter {
                     if(ctx.channel().isActive()&&ctx.channel().isWritable()){
                         RpcResponse<Object> success = RpcResponse.success(result, rpcRequest.getRequestId());
                         rpcMessage.setData(success);
+                      //  log.info("channel状态正常，可以传递消息！");
                     }else{
                         RpcResponse<Object> fail = RpcResponse.fail(RpcResponseCodeEnum.FAIL);
                         rpcMessage.setData(fail);
-                        log.error("channel无法写入，信息丢失");
+                        //log.error("channel无法写入，信息丢失");
                     }
                 }
                 //将响应写入通道

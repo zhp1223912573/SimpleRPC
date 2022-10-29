@@ -16,6 +16,7 @@ import github.javaguide.remoting.transport.netty.codec.RpcMessageEncoder;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.epoll.EpollEventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.logging.LogLevel;
@@ -57,7 +58,7 @@ public class NettyRpcClient implements RpcRequestTransport {
         channelProvider = SingletonFactory.getInstance(ChannelProvider.class);
         //初始化客户端链接资源
         bootstrap = new Bootstrap();
-        eventLoopGroup = new EpollEventLoopGroup();
+        eventLoopGroup = new NioEventLoopGroup();
         bootstrap.group(eventLoopGroup)
                 .channel(NioSocketChannel.class)
                 .handler(new LoggingHandler(LogLevel.INFO))
@@ -91,7 +92,7 @@ public class NettyRpcClient implements RpcRequestTransport {
             //封装RpcMessage
             RpcMessage rpcMessage = new RpcMessage().builder()
                     .messageType(RpcConstants.REQUEST_TYPE)
-                    .codec(SerializationTypeEnum.KYRO.getCode())
+                    .codec(SerializationTypeEnum.KRYO.getCode())
                     .compress(CompressTypeEnum.GZIP.getCode())
                     .data(rpcRequest)
                     .build();

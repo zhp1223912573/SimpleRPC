@@ -7,8 +7,9 @@ import github.javaguide.exception.RpcException;
 import github.javaguide.remoting.dto.RpcRequest;
 import github.javaguide.remoting.dto.RpcResponse;
 import github.javaguide.remoting.transport.RpcRequestTransport;
+import github.javaguide.remoting.transport.netty.client.NettyRpcClient;
 import github.javaguide.remoting.transport.socket.SocketRpcClient;
-import github.javaguide.remoting.transport.socket.SocketRpcServer;
+import java.util.concurrent.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.InvocationHandler;
@@ -84,15 +85,18 @@ public class RpcClientProxy implements InvocationHandler {
                 .paramTypes(method.getParameterTypes())
                 .build();
         RpcResponse<Object> rpcResponse = null;
-        //基于Netty传输
-//        if(rpcRequestTransport instanceof NettyRpcClient){
-//
-//        }
+
+
         //基于socket传输
         if(rpcRequestTransport instanceof SocketRpcClient){
             rpcResponse = (RpcResponse<Object>)rpcRequestTransport.sendRpcRequest(rpcRequest);
         }
-
+        //基于Netty传输
+        if(rpcRequestTransport instanceof NettyRpcClient){
+           CompletableFuture<RpcResponse<Object>> completeableFuture =
+                    (CompletableFuture<RpcResponse<Object>>)rpcRequestTransport.sendRpcRequest(rpcRequest);
+            rpcResponse = completeableFuture.get();
+        }
         //对服务请求和响应进行检验
         check(rpcResponse,rpcRequest );
 

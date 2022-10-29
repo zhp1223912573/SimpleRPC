@@ -5,6 +5,7 @@ import github.javaguide.enums.RpcErrorMessageEnum;
 import github.javaguide.exception.RpcException;
 import github.javaguide.extension.ExtensionLoader;
 import github.javaguide.registry.ServiceRegistry;
+import github.javaguide.remoting.transport.netty.server.NettyRpcServer;
 import github.javaguide.utils.CollectionUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -77,7 +78,7 @@ public class ZkServiceProviderImpl implements ServiceProvider{
             this.addService(rpcServiceConfig);
             //向注册中心进行服务注册
             serviceRegistry.registryService
-                    (rpcServiceConfig.getRpcServiceName(),new InetSocketAddress(hostAddress,9998));
+                    (rpcServiceConfig.getRpcServiceName(),new InetSocketAddress(hostAddress, NettyRpcServer.PORT));
         }catch(UnknownHostException e){
             log.error("获取本机地址时出现未知异常:",e.getMessage());
         }

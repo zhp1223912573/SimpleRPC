@@ -76,7 +76,7 @@ public class RpcMessageDecoder extends LengthFieldBasedFrameDecoder {
             //尝试解码
             ByteBuf frame = (ByteBuf) decoded;
             //存在可读数据
-            if(frame.readableBytes()>RpcConstants.TOTAL_LENGTH){
+            if(frame.readableBytes()>=RpcConstants.TOTAL_LENGTH){
                 try{
                     return decodeFrame(frame);
                 }catch(Exception e){
@@ -120,11 +120,13 @@ public class RpcMessageDecoder extends LengthFieldBasedFrameDecoder {
                 .build();
         //检查是否为心跳请求
         if(messageTyep == RpcConstants.HEARTBEAT_REQUEST_TYPE){
-            rpcMessage.setData(RpcConstants.PONG);
+          //  log.info("检查到发送心跳请求信息");
+            rpcMessage.setData(RpcConstants.PING);
             return rpcMessage;
         }
         if(messageTyep == RpcConstants.HEARTBEAT_RESPONSE_TYPE){
-            rpcMessage.setData(RpcConstants.PING);
+         //   log.info("检查到发送心跳响应信息");
+            rpcMessage.setData(RpcConstants.PONG);
             return rpcMessage;
         }
         //读取数据，并对数据进行解压反序列化
@@ -136,12 +138,12 @@ public class RpcMessageDecoder extends LengthFieldBasedFrameDecoder {
             String compressName = CompressTypeEnum.getName(compressType);
             Compress compress = ExtensionLoader.getExtensionLoader(Compress.class)
                     .getExtension(compressName);
-            log.info("解压类型为：[{}]",compressName);
+           // log.info("解压类型为：[{}]",compressName);
             data = compress.decompress(data);
             //反序列化
             String codecName = SerializationTypeEnum.getName(codec);
             Serializer serializer = ExtensionLoader.getExtensionLoader(Serializer.class).getExtension(codecName);
-            log.info("反序列化类型为：[{}]",codecName);
+           // log.info("反序列化类型为：[{}]",codecName);
             if (messageTyep == RpcConstants.REQUEST_TYPE) {
                 RpcRequest tmpValue = serializer.deserialize(data, RpcRequest.class);
                 rpcMessage.setData(tmpValue);

@@ -1,6 +1,7 @@
 package github.javaguide.config;
 
 import github.javaguide.registry.zk.util.CuratorUtils;
+import github.javaguide.remoting.transport.netty.server.NettyRpcServer;
 import github.javaguide.utils.concurrent.threadpool.ThreadPoolFactoryUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,7 +34,7 @@ public class CustomShutdownHook {
         Runtime.getRuntime().addShutdownHook(new Thread(()->{
             try {
                 String hostAddress = InetAddress.getLocalHost().getHostAddress();
-                InetSocketAddress inetSocketAddress = new InetSocketAddress(hostAddress, 9998);
+                InetSocketAddress inetSocketAddress = new InetSocketAddress(hostAddress, NettyRpcServer.PORT);
                 //清除注册的所有服务节点
                 CuratorUtils.clearRegistry(CuratorUtils.getZkClient(), inetSocketAddress);
             }catch (UnknownHostException ex){

@@ -2,7 +2,6 @@ package github.javaguide.serialize.kryo;
 
 import github.javaguide.extension.ExtensionLoader;
 import github.javaguide.serialize.Serializer;
-import org.checkerframework.checker.units.qual.K;
 import org.junit.jupiter.api.Test;
 
 /**

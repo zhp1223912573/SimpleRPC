@@ -72,9 +72,9 @@ public class NettyRpcClientHandler extends ChannelInboundHandlerAdapter {
             IdleState idleState = ((IdleStateEvent)evt).state();
             //写空闲 发送心跳到服务端维持连接
             if(idleState == IdleState.WRITER_IDLE){
-                log.info("写空闲发生 [{}]",ctx.channel().remoteAddress());
+                //log.info("写空闲发生 [{}]",ctx.channel().remoteAddress());
                 RpcMessage rpcMessage = new RpcMessage();
-                rpcMessage.setCodec(SerializationTypeEnum.PROTOSTUFF.getCode());
+                rpcMessage.setCodec(SerializationTypeEnum.KRYO.getCode());
                 rpcMessage.setCompress(CompressTypeEnum.GZIP.getCode());
                 rpcMessage.setMessageType(RpcConstants.HEARTBEAT_REQUEST_TYPE);
                 rpcMessage.setData(RpcConstants.PING);
@@ -82,6 +82,7 @@ public class NettyRpcClientHandler extends ChannelInboundHandlerAdapter {
                 Channel channel = nettyRpcClient.getConnect((InetSocketAddress) ctx.channel().remoteAddress());
                 //监听发生结果
                 channel.writeAndFlush(rpcMessage).addListener(ChannelFutureListener.CLOSE_ON_FAILURE);
+               // log.info("客户端发送心跳");
             }
         }
     }

@@ -1,6 +1,5 @@
 package github.javaguide.serialize.hessian;
 
-import github.javaguide.serialize.kryo.KryoSerializer;
 import github.javaguide.serialize.kryo.student;
 import org.junit.jupiter.api.Test;
 

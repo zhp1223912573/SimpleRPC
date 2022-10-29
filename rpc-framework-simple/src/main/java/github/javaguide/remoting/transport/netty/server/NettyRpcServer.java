@@ -22,6 +22,7 @@ import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import java.net.InetAddress;
 import java.util.concurrent.TimeUnit;
@@ -32,8 +33,9 @@ import java.util.concurrent.TimeUnit;
  * Netty服务端
  */
 @Slf4j
+@Component
 public class NettyRpcServer {
-    private static final int PORT = 9998;
+    public static final int PORT = 9998;
 
     private final ServiceProvider serviceProvider = SingletonFactory.getInstance(ZkServiceProviderImpl.class);
 
